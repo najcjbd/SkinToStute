@@ -20,24 +20,8 @@ fi
 # 给gradlew添加执行权限
 chmod +x ./gradlew
 
-echo "1. 清理构建..."
-./gradlew clean
-
-echo ""
-echo "2. 运行单元测试..."
-./gradlew test --stacktrace
-
-echo ""
-echo "3. 运行Android集成测试..."
-./gradlew connectedAndroidTest --stacktrace
-
-echo ""
-echo "4. 运行Lint检查..."
-./gradlew lint
-
-echo ""
-echo "5. 运行Detekt静态代码分析..."
-./gradlew detekt
+echo "运行所有检查..."
+./gradlew runAllChecks
 
 echo ""
 echo "========================================="
