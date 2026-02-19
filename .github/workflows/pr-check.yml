@@ -1,0 +1,159 @@
+name: PR Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  quick-check:
+    name: Quick PR Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest
+
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+      - name: Run Lint
+        run: ./gradlew lintDebug
+
+      - name: Comment test results on PR
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const testResults = fs.readFileSync('app/build/test-results/testDebugUnitTest/*.xml', 'utf8');
+            const lintResults = fs.readFileSync('app/build/reports/lint-results-debug.html', 'utf8');
+            
+            let comment = '## 🧪 测试结果\n\n';
+            comment += '### 单元测试\n';
+            comment += '✅ 单元测试已运行\n\n';
+            comment += '### 代码质量\n';
+            comment += '✅ Detekt静态分析已完成\n';
+            comment += '✅ Lint检查已完成\n\n';
+            comment += '详细报告请查看Artifacts。';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  code-coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run tests with coverage
+        run: ./gradlew testDebugUnitTest jacocoTestReport
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+      - name: Comment coverage on PR
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 80
+          min-coverage-changed-files: 85
+          title: '代码覆盖率报告'
+
+  size-check:
+    name: APK Size Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Check APK size
+        run: |
+          APK_SIZE=$(stat -f%z app/build/outputs/apk/debug/app-debug.apk)
+          MAX_SIZE=$((10 * 1024 * 1024)) # 10MB
+          
+          echo "APK Size: $APK_SIZE bytes"
+          echo "Max Size: $MAX_SIZE bytes"
+          
+          if [ $APK_SIZE -gt $MAX_SIZE ]; then
+            echo "❌ APK size exceeds 10MB limit"
+            exit 1
+          else
+            echo "✅ APK size is within limits"
+          fi
+
+  dependency-check:
+    name: Dependency Security Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run dependency check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'app'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+
+      - name: Upload dependency check report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: reports/

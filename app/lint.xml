@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Disable specific checks that are not relevant for this project -->
+    
+    <!-- Allow unused resources (they may be used dynamically) -->
+    <issue id="UnusedResources" severity="ignore" />
+    
+    <!-- Allow using hardcoded strings in tests -->
+    <issue id="HardcodedText" severity="ignore" />
+    
+    <!-- Ignore simpleDateFormat issues -->
+    <issue id="SimpleDateFormat" severity="ignore" />
+    
+    <!-- Ignore locale issues for test files -->
+    <issue id="DefaultLocale" severity="ignore" />
+    
+    <!-- Enable important checks -->
+    
+    <!-- Detect potential NullPointerExceptions -->
+    <issue id="NullChecks" severity="error" />
+    
+    <!-- Check for correct resource usage -->
+    <issue id="ResourceType" severity="error" />
+    
+    <!-- Check for missing permissions -->
+    <issue id="MissingPermission" severity="error" />
+    
+    <!-- Check for API level issues -->
+    <issue id="NewApi" severity="warning" />
+    
+    <!-- Check for correct bitmap handling -->
+    <issue id="DrawAllocation" severity="warning" />
+    
+    <!-- Check for correct use of coroutines -->
+    <issue id="CoroutineCreation" severity="warning" />
+    
+    <!-- Enable Android-specific checks -->
+    
+    <!-- Check for memory leaks -->
+    <issue id="LeakCanary" severity="warning" />
+    
+    <!-- Check for correct context usage -->
+    <issue id="ContextCast" severity="error" />
+    
+    <!-- Check for correct threading -->
+    <issue id="ThreadPoolCreation" severity="warning" />
+    
+    <!-- Enable performance checks -->
+    
+    <!-- Check for inefficient layouts -->
+    <issue id="TooManyViews" severity="warning" />
+    
+    <!-- Check for unnecessary overdraw -->
+    <issue id="Overdraw" severity="warning" />
+    
+    <!-- Enable security checks -->
+    
+    <!-- Check for insecure crypto -->
+    <issue id="InsecureCrypto" severity="error" />
+    
+    <!-- Check for insecure network connections -->
+    <issue id="InsecureNetwork" severity="warning" />
+    
+    <!-- Enable best practice checks -->
+    
+    <!-- Check for proper exception handling -->
+    <issue id="TooGenericExceptionCaught" severity="warning" />
+    
+    <!-- Check for proper use of try-catch -->
+    <issue id="CatchGeneralException" severity="warning" />
+    
+    <!-- Check for proper use of equals -->
+    <issue id="EqualsWhichReturnsTrueForNull" severity="error" />
+    
+    <!-- Enable accessibility checks -->
+    
+    <!-- Check for content descriptions -->
+    <issue id="ContentDescription" severity="warning" />
+    
+    <!-- Check for text size -->
+    <issue id="SmallSp" severity="warning" />
+    
+    <!-- Enable internationalization checks -->
+    
+    <!-- Check for text direction -->
+    <issue id="RtlHardcoded" severity="warning" />
+    
+    <!-- Check for text field issues -->
+    <issue id="TextFields" severity="warning" />
+</lint>

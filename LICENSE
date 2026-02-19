@@ -1,0 +1,55 @@
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2024 SkinToStatueAndroid Contributors
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---
+
+## IMPORTANT NOTICE
+
+This project includes code ported from PlayerStatueBuilder, which is licensed under
+the GNU General Public License v3.0.
+
+According to GPL v3.0 Section 2(b), because this work contains code from a GPL-3.0
+licensed work, the entire work must be licensed under GPL-3.0.
+
+### Ported Code from PlayerStatueBuilder
+
+The following components are based on or inspired by PlayerStatueBuilder:
+- Color difference algorithms (ColorMatcher.kt - ported from ColorDiffs.java)
+- Image processing filters (ImageFilters.kt - ported from ImageUtil.java)
+- Coordinate transformation logic (SchematicGenerator.kt, LitematicaGenerator.kt - based on FaceBuilder.java)
+- Legacy conversion logic (SkinProcessor.kt - based on LegacyConverter.java)
+- Coordinate mapping (following PlayerStatueBuilder's exact mapping)
+
+### Original Project
+
+PlayerStatueBuilder
+License: GNU General Public License v3.0
+Original project: https://github.com/phoenixr-codes/PlayerStatueBuilder
+
+### Third-Party Libraries
+
+This project uses the following third-party libraries with their respective licenses:
+- jNBT (MIT License) - https://github.com/tadukoo/jNBT
+- All other AndroidX and Kotlin libraries use Apache License 2.0 or compatible licenses
+
+These libraries are separate works and are not covered by this GPL license.
+
+---
+
+The full text of the GNU General Public License v3 can be found at:
+https://www.gnu.org/licenses/gpl-3.0.txt

@@ -1,0 +1,56 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Source code
+*.kt text
+*.java text
+*.xml text
+*.json text
+*.yml text
+*.yaml text
+*.gradle text
+*.properties text
+*.md text
+*.txt text
+*.sh text
+
+# Scripts
+*.sh text eol=lf
+
+# Makefile
+Makefile text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.icns binary
+*.tga binary
+*.webp binary
+
+# Archives
+*.zip binary
+*.jar binary
+*.aar binary
+*.apk binary
+*.ap_ binary
+
+# NBT files
+*.nbt binary
+*.schem binary
+*.litematic binary
+*.mcstructure binary
+
+# Keystore files
+*.jks binary
+*.keystore binary
+
+# Other binary
+*.pdf binary
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
