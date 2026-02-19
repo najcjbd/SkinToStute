@@ -93,12 +93,11 @@ cd /root/MinecraftTools/skin-to-statue/SkinToStatueAndroid
 - **PR Checks** - Pull Request快速检查
 - **Scheduled Tests** - 每日定时测试
 
-### 文档
+### 工作流文件
 
-- [GitHub Actions详细文档](GITHUB_ACTIONS.md)
-- [GitHub Actions快速开始](GITHUB_ACTIONS_QUICKSTART.md)
-- [状态徽章使用](BADGES.md)
-- [测试文档](TESTING.md)
+- `.github/workflows/build.yml` - 完整构建和测试工作流
+- `.github/workflows/pr-check.yml` - PR检查工作流
+- `.github/workflows/scheduled.yml` - 定时测试工作流
 
 ## 功能对比
 
@@ -191,22 +190,8 @@ SkinToStatueAndroid/
 
 ## 文档
 
-### 快速开始
-- [快速开始指南](QUICKSTART.md) - 5分钟快速上手
-- [项目结构](PROJECT_STRUCTURE.md) - 代码结构说明
-
-### 开发文档
-- [测试文档](TESTING.md) - 测试指南和覆盖率
-- [GitHub Actions](GITHUB_ACTIONS.md) - CI/CD详细文档
-- [GitHub Actions快速开始](GITHUB_ACTIONS_QUICKSTART.md) - CI/CD快速上手
-- [贡献指南](CONTRIBUTING.md) - 如何贡献代码
-- [状态徽章](BADGES.md) - 徽章使用说明
-
-### 其他文档
-- [变更日志](CHANGELOG.md) - 版本更新记录
-- [常见问题](FAQ.md) - 常见问题解答
-- [安全政策](SECURITY.md) - 安全漏洞报告
-- [许可证说明](LICENSE.md) - 许可证详情
+- [README.md](README.md) - 项目主文档
+- [LICENSE.md](LICENSE.md) - GPL v3.0许可证说明
 
 ## 许可证
 
