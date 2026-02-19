@@ -54,22 +54,74 @@ SkinToStatueAndroid项目使用GitHub Actions进行持续集成和持续部署�
 - ✅ 兼容性测试（多平台）
 - ✅ 覆盖率阈值检查（最低80%）
 
-## 使用方法
+## 第一次设置
 
-### 推送到触发构建
+### 1. 启用Actions
+
+1. 进入GitHub仓库
+2. 点击"Settings"标签
+3. 点击左侧"Actions"
+4. 点击"General"
+5. 向下滚动到"Actions permissions"
+6. 选择"Allow all actions and reusable workflows"
+7. 点击"Save"
+
+### 2. 配置Secrets（可选，用于Release构建）
+
+1. 进入GitHub仓库
+2. 点击"Settings"标签
+3. 点击左侧"Secrets and variables" → "Actions"
+4. 点击"New repository secret"
+5. 添加以下Secrets：
+
+| Secret名称 | 值 |
+|-----------|---|
+| `KEYSTORE_FILE` | Base64编码的keystore文件 |
+| `KEYSTORE_PASSWORD` | Keystore密码 |
+| `KEY_ALIAS` | 密钥别名 |
+| `KEY_PASSWORD` | 密钥密码 |
+
+### 3. 生成Base64编码的keystore
 
 ```bash
+# 在本地运行
+base64 -i release.keystore > keystore.base64.txt
+
+# 复制keystore.base64.txt的内容到KEYSTORE_FILE secret
+```
+
+## 使用方法
+
+### 提交代码
+
+```bash
+# 添加文件
+git add .
+
+# 提交
+git commit -m "feat: add new feature"
+
+# 推送到main分支（触发完整构建）
 git push origin main
-# 或
+
+# 或推送到develop分支
 git push origin develop
 ```
 
 ### 创建Pull Request
 
 ```bash
+# 创建新分支
 git checkout -b feature/my-feature
+
+# 进行更改
+# ...
+
+# 提交
 git add .
-git commit -m "Add new feature"
+git commit -m "feat: add my feature"
+
+# 推送
 git push origin feature/my-feature
 ```
 
@@ -96,60 +148,6 @@ git push origin feature/my-feature
 1. 进入工作流运行页面
 2. 滚动到"Artifacts"部分
 3. 点击下载所需的产物
-
-## 配置Secrets
-
-对于Release构建，需要配置以下Secrets：
-
-| Secret名称 | 说明 |
-|-----------|------|
-| `KEYSTORE_FILE` | Base64编码的keystore文件 |
-| `KEYSTORE_PASSWORD` | Keystore密码 |
-| `KEY_ALIAS` | 密钥别名 |
-| `KEY_PASSWORD` | 密钥密码 |
-
-### 生成Base64编码的keystore
-
-```bash
-base64 -i release.keystore
-```
-
-将输出结果复制到GitHub仓库的Secrets中。
-
-## 自定义工作流
-
-### 修改触发条件
-
-编辑`.github/workflows/build.yml`：
-
-```yaml
-on:
-  push:
-    branches: [ main, develop, staging ]  # 添加新分支
-  pull_request:
-    branches: [ main, develop ]
-```
-
-### 添加新的检查步骤
-
-在jobs中添加新步骤：
-
-```yaml
-- name: Run custom check
-  run: ./gradlew customCheck
-```
-
-### 修改覆盖率阈值
-
-编辑`pr-check.yml`：
-
-```yaml
-- name: Comment coverage on PR
-  uses: madrapps/jacoco-report@v1.6.1
-  with:
-    min-coverage-overall: 85  # 修改为85%
-    min-coverage-changed-files: 90
-```
 
 ## 本地运行检查
 
@@ -205,13 +203,45 @@ on:
 - 使用ProGuard进行代码压缩
 - 配置APK拆分
 
+## 推送前的检查清单
+
+### 必须完成
+
+- [ ] 替换README.md中的徽章URL（YOUR_USERNAME）
+  ```bash
+  ./replace-badges.sh YOUR_GITHUB_USERNAME
+  ```
+
+- [ ] 在GitHub仓库中启用Actions
+  1. 进入仓库Settings
+  2. 点击"Actions"
+  3. 点击"General"
+  4. 选择"Allow all actions and reusable workflows"
+  5. 保存
+
+- [ ] （可选）配置Release构建的Secrets
+  - KEYSTORE_FILE
+  - KEYSTORE_PASSWORD
+  - KEY_ALIAS
+  - KEY_PASSWORD
+
+### 验证清单
+
+- [ ] 工作流文件已提交
+- [ ] 测试文件已提交
+- [ ] Lint配置已提交
+- [ ] Detekt配置已提交
+- [ ] 文档已提交
+- [ ] 徽章URL已替换
+
 ## 状态徽章
 
 可以在README中添加状态徽章：
 
 ```markdown
-![Build Status](https://github.com/username/SkinToStatueAndroid/workflows/Build%20and%20Test/badge.svg)
-![Code Coverage](https://codecov.io/gh/username/SkinToStatueAndroid/branch/main/graph/badge.svg)
+[![Build Status](https://github.com/username/SkinToStatueAndroid/workflows/Build%20and%20Test/badge.svg)]
+[![PR Checks](https://github.com/username/SkinToStatueAndroid/workflows/PR%20Checks/badge.svg)]
+[![Code Coverage](https://codecov.io/gh/username/SkinToStatueAndroid/branch/main/graph/badge.svg)]
 ```
 
 ## 最佳实践
